@@ -1,0 +1,191 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+fail_under = 100
+
+[tool.pyright]
+include = ["sources"]
+stubPath = "typings"
+typeCheckingMode = "strict"
+reportMissingImports = false
+reportPrivateImportUsage = false
+reportMissingTypeStubs = true
+strictListInference = true
+strictSetInference = true
+reportImportCycles = true
+reportMatchNotExhaustive = true
+reportShadowedImports = true
+reportImplicitOverride = "warning"
+reportUnknownMemberType = false
+reportUninitializedInstanceVariable = false
+reportUnknownVariableType = false
+reportUnusedCallResult = false
+reportAny = false
+pythonVersion = "3.13"
+pythonPlatform = "Linux"
+executionEnvironments = [{ root = "sources" }]
+
+[tool.pytest.ini_options]
+addopts = "-n auto --doctest-modules -m 'not integration' -m 'not gpu' --benchmark-disable"
+pythonpath = ["sources"]
+testpaths = "tests"
+junit_family = "xunit2"
+junit_suite_name = "tests"
+markers = [
+    "integration: marks as integration test",
+    "notebooks: marks as notebook test",
+    "gpu: marks as gpu test",
+    "slow: marks tests as slow",
+    "unit: fast offline tests",
+]
+[tool.ruff]
+target-version = 'py312'
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "F",    # flake8
+    "E",    # pycodestyle
+    "B",    # flake8-bugbear
+    "C",    # mccabe
+    "I",    # isort
+    "ARG",  # flake8-unused-arguments
+    "C4",   # flake8-comprehensions
+    "EM",   # flake8-errmsg
+    "ICN",  # flake8-import-conventions
+    "G",    # flake8-logging-format
+    "PGH",  # pygrep-hooks
+    "PIE",  # flake8-pie
+    "PL",   # pylint
+    "PT",   # flake8-pytest-style
+    "PTH",  # flake8-use-pathlib
+    "RET",  # flake8-return
+    "SIM",  # flake8-simplify
+    "T20",  # flake8-print
+    "UP",   # pyupgrade
+    "NPY",  # NumPy specific rules
+    "FURB", # refurb
+    "PYI",  # flake8-pyi
+]
+exclude = [
+    "PLR2004", # no magic numbers
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+
+[project]
+name = "deformops"
+requires-python = ">=3.12"
+description = "A library for deformable sampling operations with PyTorch and CUDA."
+
+authors = [{ "name" = "Kurt Stolle", "email" = "kurt@khws.io" }]
+version = "2.0.0"  # see `sources/deformops/version.py`.
+keywords = [
+    "perception",
+    "computer vision",
+    "deep learning",
+    "object detection",
+    "instance segmentation",
+    "semantic segmentation",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+
+[tool.setuptools.packages.find]
+where = ["sources"]
+
+[tool.setuptools]
+include-package-data = true
+
+[project.optional-dependencies]
+dev = ["ruff", "pyright"]
+test = [
+    "hypothesis >= 6.100.1",
+    "pytest >= 8.1.1",
+    "pytest-sugar",
+    "pytest-xdist",
+    "pytest-benchmark",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-runner",
+    "pytest-github-actions-annotate-failures",
+    "pandas"
+]
+doc = ["sphinx", "sphinx-rtd-theme", "numpydoc"]
+cpu = [
+  "torch>=2.7.0",
+  "torchvision",
+]
+cu126 = [
+  "torch>=2.7.0",
+  "torchvision",
+]
+cu128 = [
+  "torch>=2.7.0",
+  "torchvision",
+]
+cu129 = [
+  "torch>=2.8.0",
+  "torchvision",
+]
+
+[tool.uv]
+conflicts = [
+  [
+    { extra = "cpu" },
+    { extra = "cu126" },
+    { extra = "cu128" },
+    { extra = "cu129" },
+  ],
+]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", extra = "cpu" },
+  { index = "pytorch-cu126", extra = "cu126" },
+  { index = "pytorch-cu128", extra = "cu128" },
+  { index = "pytorch-cu129", extra = "cu129" },
+]
+torchvision = [
+  { index = "pytorch-cpu", extra = "cpu" },
+  { index = "pytorch-cu126", extra = "cu126" },
+  { index = "pytorch-cu128", extra = "cu128" },
+  { index = "pytorch-cu129", extra = "cu129" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu129"
+url = "https://download.pytorch.org/whl/cu129"
+explicit = true
