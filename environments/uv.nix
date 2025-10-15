@@ -4,6 +4,8 @@
   inputs,
   pkgs,
   name,
+  backendName ? name,
+  venvDir ? ".venvs/${name}",
 }:
 pkgs.buildFHSEnv {
   name = "uv-${name}";
@@ -43,55 +45,45 @@ pkgs.buildFHSEnv {
       ])
     );
 
-  profile =
-    let
-      venvDir = ".venvs/${name}";
-    in
-    ''
-      # UV configuration. 
-      # See: https://docs.astral.sh/uv/reference/environment/
-      export UV_NO_BUILD_ISOLATION=true
-      # export UV_SYSTEM_PYTHON=true
-      export UV_PROJECT_ENVIRONMENT=${venvDir}
-      export UV_TORCH_BACKEND=auto
-      export UV_NO_MANAGED_PYTHON=true
-      export UV_PYTHON_DOWNLOADS=never
+  profile = ''
+    # UV configuration. 
+    # See: https://docs.astral.sh/uv/reference/environment/
+    # export UV_NO_BUILD_ISOLATION=true
+    export UV_SYSTEM_PYTHON=true
+    export UV_PROJECT_ENVIRONMENT=${venvDir}
+    export UV_TORCH_BACKEND=auto
+    # export UV_NO_MANAGED_PYTHON=true
+    export UV_PYTHON_DOWNLOADS=never
 
-      # C compiler.
-      # export CC=${pkgs.gcc}/bin/gcc
-      # export CXX=${pkgs.gcc}/bin/g++
-      # export PATH=${pkgs.gcc}/bin:$PATH
+    # C compiler.
+    # export CC=${pkgs.gcc}/bin/gcc
+    # export CXX=${pkgs.gcc}/bin/g++
+    # export PATH=${pkgs.gcc}/bin:$PATH
 
-      # Linker.
-      export LD_LIBRARY_PATH=$(nixglhost -p):$LD_LIBRARY_PATH
-      export LD_LIBRARY_PATH="${
-        pkgs.lib.makeLibraryPath [
-          pkgs.cudaPackages.cudatoolkit
-          pkgs.cudaPackages.cudnn
-        ]
-      }:$LD_LIBRARY_PATH"
-      # export LD_LIBRARY_PATH="${pkgs.gcc.cc.lib}/lib:$LD_LIBRARY_PATH"
+    # Linker.
+    export LD_LIBRARY_PATH=$(nixglhost -p):$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH="${
+      pkgs.lib.makeLibraryPath [
+        pkgs.cudaPackages.cudatoolkit
+        pkgs.cudaPackages.cudnn
+      ]
+    }:$LD_LIBRARY_PATH"
+    # export LD_LIBRARY_PATH="${pkgs.gcc.cc.lib}/lib:$LD_LIBRARY_PATH"
 
-      export LIBRARY_PATH="${pkgs.lib.makeLibraryPath [ pkgs.cudaPackages.cudatoolkit ]}:$LIBRARY_PATH"
+    export LIBRARY_PATH="${pkgs.lib.makeLibraryPath [ pkgs.cudaPackages.cudatoolkit ]}:$LIBRARY_PATH"
 
-      # CUDA.
-      export CUDA_PATH=${pkgs.cudaPackages.cudatoolkit}
-      export CUDA_HOME=${pkgs.cudaPackages.cudatoolkit}
+    # CUDA.
+    export CUDA_PATH=${pkgs.cudaPackages.cudatoolkit}
+    export CUDA_HOME=${pkgs.cudaPackages.cudatoolkit}
 
-      # Activate environment.
-      if [ ! -d ${venvDir} ]; then
-        echo "Creating UV virtual environment in ${venvDir} ..."
-        uv venv ${venvDir}
+    echo "* Running UV sync..."
+    uv sync --extra ${backendName} --preview-features extra-build-dependencies
 
-        echo "Running initial uv sync ..."
-        uv sync --no-build-isolation
-      else
-        echo "Using existing UV virtual environment in ${venvDir} ..."
-      fi
-      . ${venvDir}/bin/activate
+    echo "* Activating virtual environment..."
+    source ${venvDir}/bin/activate
 
-      # Point TORCH_EXTENSIONS_DIR to the virtual environment
-      export TORCH_EXTENSIONS_DIR=${venvDir}/torch_extensions
-      mkdir -p "$TORCH_EXTENSIONS_DIR"
-    '';
+    # Point TORCH_EXTENSIONS_DIR to the virtual environment
+    export TORCH_EXTENSIONS_DIR=${venvDir}/torch_extensions
+    mkdir -p "$TORCH_EXTENSIONS_DIR"
+  '';
 }

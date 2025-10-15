@@ -56,6 +56,11 @@
               pkgs = pkgs.cudaPackages_12_8.pkgs;
               name = "cu128";
             })
+            (uvBuild {
+              inherit inputs;
+              pkgs = pkgs.cudaPackages_12_9.pkgs;
+              name = "cu129";
+            })
           ];
           uvShells = builtins.listToAttrs (
             builtins.map (fhs: {
@@ -80,7 +85,7 @@
         {
           packages = ociPackages;
           devShells = {
-            default = self.devShells.${system}.uv-cu128;
+            default = self.devShells.${system}.uv-cu129;
           }
           // uvShells
           // mmShells;

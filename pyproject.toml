@@ -1,10 +1,121 @@
+[project]
+name = "deformops"
+requires-python = ">=3.12"
+description = "A library for deformable sampling operations with PyTorch and CUDA."
+
+authors = [{ "name" = "Kurt Stolle", "email" = "kurt@khws.io" }]
+version = "2.0.0"  # see `sources/deformops/version.py`.
+keywords = [
+    "perception",
+    "computer vision",
+    "deep learning",
+    "object detection",
+    "instance segmentation",
+    "semantic segmentation",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = []
+
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=47"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools_scm]
-version_scheme = "guess-next-dev"
-local_scheme = "node-and-date"
+[tool.setuptools.packages.find]
+where = ["sources"]
+
+[tool.setuptools]
+include-package-data = true
+
+[project.optional-dependencies]
+cpu = [
+  "torch>=2.7.0",
+  "torchvision",
+]
+cu126 = [
+  "torch>=2.7.0",
+  "torchvision",
+]
+cu128 = [
+  "torch>=2.7.0",
+  "torchvision",
+]
+cu129 = [
+  "torch>=2.8.0",
+  "torchvision",
+]
+
+[tool.uv]
+environments = [
+  "sys_platform == 'linux'",
+]
+conflicts = [
+  [
+    { extra = "cpu" },
+    { extra = "cu126" },
+    { extra = "cu128" },
+    { extra = "cu129" },
+  ],
+]
+
+[tool.uv.extra-build-dependencies]
+deformops = ["setuptools"]
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.141.0",
+    "pandas>=2.3.3",
+    "pytest>=8.4.2",
+    "pytest-benchmark>=5.1.0",
+    "pytest-cov>=7.0.0",
+    "pytest-github-actions-annotate-failures>=0.3.0",
+    "pytest-mock>=3.15.1",
+    "pytest-sugar>=1.1.1",
+    "pytest-xdist>=3.8.0",
+]
+
+[tool.uv.pip]
+torch-backend = "auto"
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", extra = "cpu" },
+  { index = "pytorch-cu126", extra = "cu126" },
+  { index = "pytorch-cu128", extra = "cu128" },
+  { index = "pytorch-cu129", extra = "cu129" },
+]
+torchvision = [
+  { index = "pytorch-cpu", extra = "cpu" },
+  { index = "pytorch-cu126", extra = "cu126" },
+  { index = "pytorch-cu128", extra = "cu128" },
+  { index = "pytorch-cu129", extra = "cu129" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu129"
+url = "https://download.pytorch.org/whl/cu129"
+explicit = true
 
 [tool.coverage.run]
 branch = true
@@ -84,108 +195,3 @@ exclude = [
 docstring-code-format = true
 docstring-code-line-length = "dynamic"
 
-[project]
-name = "deformops"
-requires-python = ">=3.12"
-description = "A library for deformable sampling operations with PyTorch and CUDA."
-
-authors = [{ "name" = "Kurt Stolle", "email" = "kurt@khws.io" }]
-version = "2.0.0"  # see `sources/deformops/version.py`.
-keywords = [
-    "perception",
-    "computer vision",
-    "deep learning",
-    "object detection",
-    "instance segmentation",
-    "semantic segmentation",
-]
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
-    "Programming Language :: Python :: Implementation :: CPython",
-]
-
-[tool.setuptools.packages.find]
-where = ["sources"]
-
-[tool.setuptools]
-include-package-data = true
-
-[project.optional-dependencies]
-dev = ["ruff", "pyright"]
-test = [
-    "hypothesis >= 6.100.1",
-    "pytest >= 8.1.1",
-    "pytest-sugar",
-    "pytest-xdist",
-    "pytest-benchmark",
-    "pytest-cov",
-    "pytest-mock",
-    "pytest-runner",
-    "pytest-github-actions-annotate-failures",
-    "pandas"
-]
-doc = ["sphinx", "sphinx-rtd-theme", "numpydoc"]
-cpu = [
-  "torch>=2.7.0",
-  "torchvision",
-]
-cu126 = [
-  "torch>=2.7.0",
-  "torchvision",
-]
-cu128 = [
-  "torch>=2.7.0",
-  "torchvision",
-]
-cu129 = [
-  "torch>=2.8.0",
-  "torchvision",
-]
-
-[tool.uv]
-conflicts = [
-  [
-    { extra = "cpu" },
-    { extra = "cu126" },
-    { extra = "cu128" },
-    { extra = "cu129" },
-  ],
-]
-
-[tool.uv.sources]
-torch = [
-  { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu126", extra = "cu126" },
-  { index = "pytorch-cu128", extra = "cu128" },
-  { index = "pytorch-cu129", extra = "cu129" },
-]
-torchvision = [
-  { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu126", extra = "cu126" },
-  { index = "pytorch-cu128", extra = "cu128" },
-  { index = "pytorch-cu129", extra = "cu129" },
-]
-
-[[tool.uv.index]]
-name = "pytorch-cpu"
-url = "https://download.pytorch.org/whl/cpu"
-explicit = true
-
-[[tool.uv.index]]
-name = "pytorch-cu126"
-url = "https://download.pytorch.org/whl/cu126"
-explicit = true
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
-
-[[tool.uv.index]]
-name = "pytorch-cu129"
-url = "https://download.pytorch.org/whl/cu129"
-explicit = true
